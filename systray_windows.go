@@ -259,8 +259,10 @@ func (t *winTray) wndProc(hWnd windows.Handle, message uint32, wParam, lParam ui
 		systrayExit()
 	case t.wmSystrayMessage:
 		switch lParam {
-		case WM_RBUTTONUP, WM_LBUTTONUP:
+		case WM_RBUTTONUP:
 			t.showMenu()
+		case WM_LBUTTONUP:
+			systrayClicked()
 		}
 	case t.wmTaskbarCreated: // on explorer.exe restarts
 		t.nid.add()
@@ -639,6 +641,10 @@ func nativeLoop() {
 			pDispatchMessage.Call(uintptr(unsafe.Pointer(m)))
 		}
 	}
+}
+
+func showMenu() {
+	wt.showMenu()
 }
 
 func quit() {
