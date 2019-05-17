@@ -239,8 +239,9 @@ func (t *winTray) wndProc(hWnd windows.Handle, message uint32, wParam, lParam ui
 		WM_COMMAND    = 0x0111
 		WM_DESTROY    = 0x0002
 		WM_ENDSESSION = 0x16
-		WM_RBUTTONUP  = 0x0205
 		WM_LBUTTONUP  = 0x0202
+		WM_LBUTTONDBLCLK = 0x0203
+		WM_RBUTTONUP  = 0x0205
 	)
 	switch message {
 	case WM_COMMAND:
@@ -263,6 +264,8 @@ func (t *winTray) wndProc(hWnd windows.Handle, message uint32, wParam, lParam ui
 			t.showMenu()
 		case WM_LBUTTONUP:
 			systrayClicked()
+		case WM_LBUTTONDBLCLK:
+			systrayDoubleClicked()
 		}
 	case t.wmTaskbarCreated: // on explorer.exe restarts
 		t.nid.add()
